@@ -3,14 +3,18 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <errno.h>
 
 const int INIT_CMD_SIZE = 16;
 
 void inputStrToArr(char* inputStr, char ***toReturn);
+void  cd_command(char* filename);
+void  pwd_command();
+char* gnu_getcwd();
 
 int main(int argc, char *argv[]){
 
-	//TODO: Read this from terminal
+	TODO: Read this from terminal
 	char inputStr[] = "/bin/date -u";
 
 	char **command = NULL;
@@ -60,4 +64,32 @@ void inputStrToArr(char* inputStr, char ***toReturn) {
 
 	return;
 }
+
+void cd_command(char* path){
+	if(chdir(path) != 0)
+		perror("cd");
+} 
+
+void pwd_command(){
+	char* buffer = NULL;
+	buffer = gnu_getcwd();
+	fprintf(stdout, "%s\n", buffer);
+
+}
+
+char* gnu_getcwd(){
+  size_t size = 100;
+
+  while (1)
+    {
+      char *buffer = (char *) malloc (size);
+      if (getcwd (buffer, size) == buffer)
+        return buffer;
+      free (buffer);
+      if (errno != ERANGE)
+        return 0;
+      size *= 2;
+    }	
+}
+
 
