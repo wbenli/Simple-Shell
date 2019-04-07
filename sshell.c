@@ -14,7 +14,7 @@ char* gnu_getcwd();
 
 int main(int argc, char *argv[]){
 
-	TODO: Read this from terminal
+	//TODO: Read this from terminal
 	char inputStr[] = "/bin/date -u";
 
 	char **command = NULL;
